@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste Github</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4e4376, #2b5876);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    button {
+      background: #ffb400;
+      border: none;
+      color: #222;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ffc933;
+      transform: scale(1.05);
+    }
+
+    .coords {
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Teste Jones Pedro</h1>
+    <button onclick="obterLocalizacao()">teste gen</button>
+    <div id="resultado" style="display:none;">
+      <p class="coords">posição (x): <span id="lat"></span></p>
+      <p class="coords">posição (y): <span id="lon"></span></p>
+    </div>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    function obterLocalizacao() {
+      const status = document.getElementById("status");
+      const resultado = document.getElementById("resultado");
+
+      status.textContent = "⏳ Realizando teste...";
+      resultado.style.display = "none";
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude.toFixed(6);
+            const lon = pos.coords.longitude.toFixed(6);
+
+            document.getElementById("lat").textContent = lat;
+            document.getElementById("lon").textContent = lon;
+
+            status.textContent = "✅ teste feito com sucesso!";
+            resultado.style.display = "block";
+          },
+          (error) => {
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                status.textContent = "❌ Permissão negada. Entre em contato com o administrador.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                status.textContent = "⚠️ teste indisponível.";
+                break;
+              case error.TIMEOUT:
+                status.textContent = "⌛ Tempo esgotado. Tente novamente.";
+                break;
+              default:
+                status.textContent = "❗ Erro desconhecido.";
+            }
+          }
+        );
+      } else {
+        status.textContent = "Seu navegador não suportou ao teste.";
+      }
+    }
+  </script>
+
+</body>
+</html>
