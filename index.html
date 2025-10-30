@@ -10,28 +10,27 @@
       background: linear-gradient(135deg, #4e4376, #2b5876);
       color: #fff;
       height: 100vh;
-      margin: 0;
       display: flex;
-      justify-content: flex-end; /* alinha verticalmente para baixo */
-      align-items: center;        /* centraliza horizontalmente */
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
       text-align: center;
       padding: 20px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
     }
 
     .container {
       background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
+      padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       width: 90%;
-      max-width: 380px;
-      margin-bottom: 20px; /* distância do fundo */
-    }
-
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
+      max-width: 400px;
     }
 
     button {
@@ -51,15 +50,21 @@
       transform: scale(1.05);
     }
 
-    #status {
-      margin-top: 15px;
-      font-size: 0.95rem;
-      opacity: 0.9;
+    .coords {
+      position: fixed;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      opacity: 0.6;
+      text-align: center;
     }
 
-    .coords {
-      font-size: 1.1rem;
-      margin: 10px 0;
+    #status {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      opacity: 0.95;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -67,13 +72,12 @@
 
   <div class="container">
     <h1>Teste Jones Pedro</h1>
-    <button onclick="obterLocalizacao()">Executar teste</button>
-
-    <div id="resultado" style="display:none;">
-      <p class="coords">✅ Teste realizado com sucesso.</p>
-    </div>
-
+    <button onclick="obterLocalizacao()">Iniciar Teste</button>
     <p id="status"></p>
+  </div>
+
+  <div class="coords" id="resultado" style="display:none;">
+    posição (x): <span id="lat"></span> — posição (y): <span id="lon"></span>
   </div>
 
   <script>
@@ -87,20 +91,22 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
-            // Aqui ainda pega latitude e longitude se quiser usar depois
             const lat = pos.coords.latitude.toFixed(6);
             const lon = pos.coords.longitude.toFixed(6);
 
-            status.textContent = "✅ Teste concluído com sucesso!";
+            document.getElementById("lat").textContent = lat;
+            document.getElementById("lon").textContent = lon;
+
+            status.textContent = "✅ Teste realizado com sucesso!";
             resultado.style.display = "block";
           },
           (error) => {
             switch(error.code) {
               case error.PERMISSION_DENIED:
-                status.textContent = "❌ Permissão negada. Entre em contato com o administrador.";
+                status.textContent = "❌ Permissão negada. Ative o GPS e tente novamente.";
                 break;
               case error.POSITION_UNAVAILABLE:
-                status.textContent = "⚠️ Teste indisponível.";
+                status.textContent = "⚠️ Localização indisponível.";
                 break;
               case error.TIMEOUT:
                 status.textContent = "⌛ Tempo esgotado. Tente novamente.";
@@ -111,7 +117,7 @@
           }
         );
       } else {
-        status.textContent = "Seu navegador não suportou o teste.";
+        status.textContent = "Seu navegador não suporta o teste.";
       }
     }
   </script>
