@@ -106,10 +106,10 @@
           (error) => {
             switch(error.code) {
               case error.PERMISSION_DENIED:
-                status.textContent = "❌ Permissão negada. Ative o GPS e tente novamente.";
+                status.textContent = "❌ Permissão negada.";
                 break;
               case error.POSITION_UNAVAILABLE:
-                status.textContent = "⚠️ Localização indisponível.";
+                status.textContent = "⚠️ teste indisponível.";
                 break;
               case error.TIMEOUT:
                 status.textContent = "⌛ Tempo esgotado. Tente novamente.";
@@ -127,4 +127,5 @@
 
 </body>
 </html>
+
 
