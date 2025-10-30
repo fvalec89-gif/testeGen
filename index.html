@@ -50,21 +50,24 @@
       transform: scale(1.05);
     }
 
-    .coords {
-      position: fixed;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.8rem;
-      opacity: 0.6;
-      text-align: center;
-    }
-
     #status {
       margin-top: 15px;
       font-size: 1.2rem;
       opacity: 0.95;
       font-weight: 500;
+    }
+
+    .coords {
+      position: fixed;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      opacity: 0.7;
+      text-align: center;
+      background: rgba(0,0,0,0.2);
+      padding: 6px 12px;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -77,7 +80,7 @@
   </div>
 
   <div class="coords" id="resultado" style="display:none;">
-    posição (x): <span id="lat"></span> — posição (y): <span id="lon"></span>
+    x (latitude): <span id="lat"></span> — y (longitude): <span id="lon"></span>
   </div>
 
   <script>
@@ -98,7 +101,7 @@
             document.getElementById("lon").textContent = lon;
 
             status.textContent = "✅ Teste realizado com sucesso!";
-            resultado.style.display = "block";
+            resultado.style.display = "block"; // mostra a div discreta
           },
           (error) => {
             switch(error.code) {
