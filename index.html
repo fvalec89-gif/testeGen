@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -10,26 +10,28 @@
       background: linear-gradient(135deg, #4e4376, #2b5876);
       color: #fff;
       height: 100vh;
+      margin: 0;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-end; /* alinha verticalmente para baixo */
+      align-items: center;        /* centraliza horizontalmente */
       flex-direction: column;
       text-align: center;
       padding: 20px;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-    }
-
     .container {
       background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
+      padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       width: 90%;
-      max-width: 400px;
+      max-width: 380px;
+      margin-bottom: 20px; /* distância do fundo */
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
     }
 
     button {
@@ -49,15 +51,15 @@
       transform: scale(1.05);
     }
 
-    .coords {
-      font-size: 1.1rem;
-      margin: 10px 0;
-    }
-
     #status {
       margin-top: 15px;
       font-size: 0.95rem;
       opacity: 0.9;
+    }
+
+    .coords {
+      font-size: 1.1rem;
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -65,11 +67,12 @@
 
   <div class="container">
     <h1>Teste Jones Pedro</h1>
-    <button onclick="obterLocalizacao()">teste gen</button>
+    <button onclick="obterLocalizacao()">Executar teste</button>
+
     <div id="resultado" style="display:none;">
-      <p class="coords">posição (x): <span id="lat"></span></p>
-      <p class="coords">posição (y): <span id="lon"></span></p>
+      <p class="coords">✅ Teste realizado com sucesso.</p>
     </div>
+
     <p id="status"></p>
   </div>
 
@@ -84,13 +87,11 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
+            // Aqui ainda pega latitude e longitude se quiser usar depois
             const lat = pos.coords.latitude.toFixed(6);
             const lon = pos.coords.longitude.toFixed(6);
 
-            document.getElementById("lat").textContent = lat;
-            document.getElementById("lon").textContent = lon;
-
-            status.textContent = "✅ teste feito com sucesso!";
+            status.textContent = "✅ Teste concluído com sucesso!";
             resultado.style.display = "block";
           },
           (error) => {
@@ -99,7 +100,7 @@
                 status.textContent = "❌ Permissão negada. Entre em contato com o administrador.";
                 break;
               case error.POSITION_UNAVAILABLE:
-                status.textContent = "⚠️ teste indisponível.";
+                status.textContent = "⚠️ Teste indisponível.";
                 break;
               case error.TIMEOUT:
                 status.textContent = "⌛ Tempo esgotado. Tente novamente.";
@@ -110,11 +111,10 @@
           }
         );
       } else {
-        status.textContent = "Seu navegador não suportou ao teste.";
+        status.textContent = "Seu navegador não suportou o teste.";
       }
     }
   </script>
 
 </body>
 </html>
-
